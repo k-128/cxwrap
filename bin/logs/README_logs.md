@@ -1,0 +1,1 @@
+By default, logs will be saved in this folder, to configure logs edit src.util.logger.py

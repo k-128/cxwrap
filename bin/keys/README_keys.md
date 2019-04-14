@@ -1,0 +1,1 @@
+This folder can be used to store files containing API keys, as shown in [test.async_example.py](/test/async_example.py)
