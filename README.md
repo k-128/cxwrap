@@ -24,6 +24,7 @@ More detailed informations contained in the docs below:<br/>
 |             [Binance.md](/bin/docs/Binance.md) | Wrapper for the Binance APIs      |
 |       [BinanceDEX.md](/bin/docs/BinanceDEX.md) | Wrapper for the Binance DEX API   |
 |           [Bitfinex.md](/bin/docs/Bitfinex.md) | Wrapper for the Bitfinex API      |
+|             [Deribit.md](/bin/docs/Deribit.md) | Wrapper for the Deribit API       |
 
 <br/>
 
