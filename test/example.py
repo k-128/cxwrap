@@ -150,13 +150,57 @@ def main():
         resp = bitfinex_wrapper.tickers_GET(symbols="tBTCUSD,tLTCUSD,fUSD")
         logger.info(resp)
 
+    def deribit_examples():
+        # with open("bin/keys/deribit_k.txt", "r") as f:
+        #     deribit_key = f.read()
+        # with open("bin/keys/deribit_s.txt", "r") as f:
+        #     deribit_secret = f.read()
+
+        deribit = CryptoWrapper(
+            api="Deribit",
+            # api_key=deribit_key,
+            # api_secret=deribit_secret,
+            cache_expire=0,
+            max_retries=2
+        )
+        deribit_wrapper = deribit.wrapper
+
+        # To alternate between mainnet & testnet:
+        deribit_wrapper.BASE_URL = "https://www.deribit.com/api/v2"
+        # deribit_wrapper.BASE_URL = "https://test.deribit.com/api/v2"
+
+        def example_1():
+            resp = deribit_wrapper.get_time_GET()
+            logger.info(resp)
+
+        def example_2():
+            resp = deribit_wrapper.get_contract_size_GET(
+                instrument_name="BTC-PERPETUAL"
+            )
+            logger.info(resp)
+
+        def example_3():
+            resp = deribit_wrapper.order_buy_GET(
+                instrument_name="BTC-PERPETUAL",
+                amount=500,
+                type="limit",
+                label="test",
+                price=1000
+            )
+            logger.info(resp)
+
+        example_1()
+        # example_2()
+        # example_3()
+
     try:
-        cmc_examples()
+        # cmc_examples()
         # cryptocompare_examples()
         # bitmex_examples()
         # binance_examples()
         # binance_dex_examples()
         # bitfinex_examples()
+        deribit_examples()
 
     except Exception as e:
         logger.info(f"Exception: {e}")

@@ -6,6 +6,7 @@ import json
 import tempfile
 import hmac
 from hashlib import sha256, sha384
+from uuid import uuid4
 from urllib.parse import urlparse
 from time import time, sleep
 from dataclasses import dataclass, asdict
@@ -1688,6 +1689,317 @@ class Bitfinex:
         return response
 
 
+@dataclass
+class DeribitFunctionsEndpoints:
+    # Authentication
+    auth_GET: str = "/public/auth"
+
+    # Supporting
+    get_time_GET: str = "/public/get_time"
+    test_GET: str = "/public/test"
+
+    # Account management
+    get_announcements_GET: str = "/public/get_announcements"
+    change_subaccount_name_GET: str = "/private/change_subaccount_name"
+    create_subaccount_GET: str = "/private/create_subaccount"
+    disable_tfa_for_subaccount_GET: str = "/private/disable_tfa_for_subaccount"
+    get_account_summary_GET: str = "/private/get_account_summary"
+    get_email_language_GET: str = "/private/get_email_language"
+    get_new_announcements_GET: str = "/private/get_new_announcements"
+    get_position_GET: str = "/private/get_position"
+    get_positions_GET: str = "/private/get_positions"
+    get_subaccounts_GET: str = "/private/get_subaccounts"
+    set_announcement_as_read_GET: str = "/private/set_announcement_as_read"
+    create_subaccount_GET: str = "/private/create_subaccount"
+    set_email_for_subaccount_GET: str = "/private/set_email_for_subaccount"
+    set_email_language_GET: str = "/private/set_email_language"
+    set_password_for_subaccount_GET: str = "/private" \
+                                           "/set_password_for_subaccount"
+    toggle_notifications_from_subaccount_GET: str = \
+        "/private/toggle_notifications_from_subaccount"
+    toggle_subaccount_login_GET: str = "/private/toggle_subaccount_login"
+
+    # Trading
+    order_buy_GET: str = "/private/buy"
+    order_sell_GET: str = "/private/sell"
+    order_edit_GET: str = "/private/edit"
+    order_cancel_GET: str = "/private/cancel"
+    order_cancel_all_GET: str = "/private/cancel_all"
+    order_cancel_all_by_currency_GET: str = "/private/cancel_all_by_currency"
+    order_cancel_all_by_instrument_GET: str = "/private" \
+                                              "/cancel_all_by_instrument"
+    close_position_GET: str = "/private/close_position"
+    get_margins_GET: str = "/private/get_margins"
+    get_open_orders_by_currency_GET: str = "/private" \
+                                           "/get_open_orders_by_currency"
+    get_open_orders_by_instrument_GET: str = "/private" \
+                                             "/get_open_orders_by_instrument"
+    get_order_history_by_currency_GET: str = "/private" \
+                                             "/get_order_history_by_currency"
+    get_order_history_by_instrument_GET: str = \
+        "/private/get_order_history_by_instrument"
+    get_order_margin_by_ids_GET: str = "/private/get_order_margin_by_ids"
+    get_order_state_GET: str = "/private/get_order_state"
+    get_user_trades_by_currency_GET: str = \
+        "/private/get_user_trades_by_currency"
+    get_user_trades_by_currency_and_time_GET: str = \
+        "/private/get_user_trades_by_currency_and_time"
+    get_user_trades_by_instrument_GET: str = "/private" \
+                                             "/get_user_trades_by_instrument"
+    get_user_trades_by_instrument_and_time_GET: str = \
+        "/private/get_user_trades_by_instrument_and_time"
+    get_user_trades_by_order_GET: str = "/private/get_user_trades_by_order"
+    get_settlement_history_by_instrument_GET: str = \
+        "/private/get_settlement_history_by_instrument"
+    get_settlement_history_by_currency_GET: str = \
+        "/private/get_settlement_history_by_currency"
+
+    # Market data
+    get_book_summary_by_currency_GET: str = "/public" \
+                                            "/get_book_summary_by_currency"
+    get_book_summary_by_instrument_GET: str = "/public" \
+                                              "/get_book_summary_by_instrument"
+    get_contract_size_GET: str = "/public/get_contract_size"
+    get_currencies_GET: str = "/public/get_currencies"
+    get_funding_chart_data_GET: str = "/public/get_funding_chart_data"
+    get_historical_volatility_GET: str = "/public/get_historical_volatility"
+    get_index_GET: str = "/public/get_index"
+    get_instruments_GET: str = "/public/get_instruments"
+    get_last_settlements_by_currency_GET: str = \
+        "/public/get_last_settlements_by_currency"
+    get_last_settlements_by_instrument_GET: str = \
+        "/public/get_last_settlements_by_instrument"
+    get_last_trades_by_currency_GET: str = \
+        "/public/get_last_trades_by_currency"
+    get_last_trades_by_currency_and_time_GET: str = \
+        "/public/get_last_trades_by_currency_and_time"
+    get_last_trades_by_instrument_GET: str = "/public" \
+                                             "/get_last_trades_by_instrument"
+    get_last_trades_by_instrument_and_time_GET: str = \
+        "/public/get_last_trades_by_instrument_and_time"
+    get_order_book_GET: str = "/public/get_order_book"
+    get_trade_volumes_GET: str = "/public/get_trade_volumes"
+    ticker_GET: str = "/public/ticker"
+
+    # Wallet
+    wallet_cancel_transfer_by_id_GET: str = "/private/cancel_transfer_by_id"
+    wallet_cancel_withdrawal_GET: str = "/private/cancel_withdrawal"
+    wallet_create_deposit_address_GET: str = "/private/create_deposit_address"
+    wallet_get_current_deposit_address_GET: str = \
+        "/private/get_current_deposit_address"
+    wallet_get_deposits_GET: str = "/private/get_deposits"
+    wallet_get_transfers_GET: str = "/private/get_transfers"
+    wallet_get_withdrawals_GET: str = "/private/get_withdrawals"
+    wallet_withdraw_GET: str = "/private/withdraw"
+
+
+class Deribit:
+    '''Wrapper for the Deribit API
+
+    Params:
+        asynchronous: bool = False
+        api_key: str = None
+        api_secret: str = None
+        request_timeout: int = 10 (seconds)
+        max_retries: int = 0
+            Number of retries on errors.
+        retry_time: int = 3 (seconds)
+            Interval between retries.
+
+    Not supported in async mode:
+        cache_expire: int = 120 (seconds)
+            How long results will be cached.
+
+    To alternate between mainnet & testnet:
+        Deribit.BASE_URL = "https://www.deribit.com/api/v2"
+        Deribit.BASE_URL = "https://test.deribit.com/api/v2"
+
+    For more details, see: https://docs.deribit.com/v2/
+    '''
+    BASE_URL: str = "https://www.deribit.com/api/v2"
+
+    def _create_class_function(self, function_name, endpoint, verb):
+        if not self.asynchronous:
+            def _endpoint_request(self, **kwargs):
+                response = self._request(endpoint, verb, params=kwargs)
+                return response
+
+            setattr(self.__class__, function_name, _endpoint_request)
+
+        else:
+            async def _endpoint_request(self, **kwargs):
+                response = await self._request_async(
+                    endpoint, verb, params=kwargs
+                )
+                return response
+
+            setattr(self.__class__, function_name, _endpoint_request)
+
+    def __init__(self, asynchronous: bool = False,
+                 api_key: str = None, api_secret: str = None,
+                 request_timeout: int = 10, max_retries: int = 0,
+                 retry_time: int = 3,  cache_expire: int = 120):
+        # Set logger
+        self.logger = logging.getLogger(f"_.{__name__}")
+        self.logger.debug(f"Initializing {self.__repr__()}")
+
+        # Set session & keys
+        self.asynchronous = asynchronous
+        self.session = None
+        self.api_key = api_key
+        self.api_secret = api_secret
+        self.request_timeout = request_timeout
+        self.cache_expire = cache_expire
+
+        # Set retries
+        self.max_retries = max_retries
+        self.retry_time = retry_time
+        self.retries = 0
+
+        # Create functions
+        funcs = asdict(DeribitFunctionsEndpoints())
+        for function_name in funcs.keys():
+            endpoint = funcs[function_name]
+            pattern = re.compile(r"(GET|POST|PUT|DELETE)$")
+            matches = pattern.finditer(function_name)
+            for match in matches:
+                verb = match[0]
+
+            self._create_class_function(function_name, endpoint, verb)
+
+    def __del__(self):
+        self.logger.debug(f"Deleting {self.__repr__()}")
+
+    def _set_auth_headers(self, prepped):
+        '''Set authentication headers on a preppared request'''
+        verb = prepped.method
+        parsed_url = urlparse(prepped.url)
+        path = parsed_url.path
+        path = "?".join([path, parsed_url.query]) if parsed_url.query else path
+        nonce = uuid4().hex
+        data = prepped.body or ""
+
+        timestamp = int(time() * 1000)
+        message = f"{timestamp}\n{nonce}\n{verb}\n{path}\n{data}\n"
+        signature = hmac.new(
+            key=self.api_secret.encode("utf-8"),
+            msg=message.encode("utf-8"),
+            digestmod=sha256
+        ).hexdigest()
+
+        auth = f"deri-hmac-sha256 id={self.api_key},ts={timestamp}," \
+               f"nonce={nonce},sig={signature}"
+        prepped.headers.update({"Authorization": auth})
+
+    def _handle_response(self, response_object):
+        '''Handle response, error'''
+        response = None
+        try:
+            # raise Exception on non [200] response
+            response_object.raise_for_status()
+
+            # Handle response
+            response = json.loads(response_object.text)
+
+            # Cache handling
+            if not self.asynchronous:
+                if isinstance(response, list):
+                    ob = response_object.from_cache
+                    response = [dict(i, **{"cached": ob}) for i in response]
+
+                if isinstance(response, dict):
+                    response["cached"] = response_object.from_cache
+
+        except Exception as e:
+            self.logger.info("Exception: {}".format(e))
+            if response_object.status_code in (400, 401, 403, 404, 429, 500):
+                # No retries (Bad request, Denied, Not found, Rate limit...)
+                response = response_object.text
+
+        return response
+
+    def _request(self, endpoint, verb, params):
+        def retry():
+            sleep(self.retry_time)
+            self.retries += 1
+            if self.retries >= self.max_retries:
+                raise Exception("Retry limit hit.")
+
+            return self._request(endpoint, verb, params)
+
+        # Create session
+        if not self.session:
+            cache_filename = "deribit_cache"
+            filename = os.path.join(tempfile.gettempdir(), cache_filename)
+            self.session = CachedSession(
+                cache_name=filename,
+                backend="sqlite",
+                expire_after=self.cache_expire,
+                allowable_methods=("GET", "POST", "PUT", "DELETE")
+            )
+            self.session.headers.update({"Accept": "application/json"})
+            self.session.headers.update({"Accept-Encoding": "gzip"})
+
+        # Prepare request
+        url = self.BASE_URL + endpoint
+        req = Request(method=verb, url=url, params=params)
+        prepped = self.session.prepare_request(req)
+        if self.api_key:
+            self._set_auth_headers(prepped)
+
+        # Send request
+        self.logger.info("Sending request to: {}".format(prepped.url))
+        response_object = self.session.send(
+            prepped, timeout=self.request_timeout
+        )
+        response = self._handle_response(response_object)
+
+        # Retries (set to 0 on success)
+        if self.max_retries > 0:
+            if not response:
+                retry()
+            self.retries = 0
+
+        return response
+
+    async def _request_async(self, endpoint, verb, params):
+        async def retry():
+            await asyncio.sleep(self.retry_time)
+            self.retries += 1
+            if self.retries >= self.max_retries:
+                raise Exception("Retry limit hit.")
+
+            return await self._request(endpoint, verb, params)
+
+        # Create session
+        if not self.session:
+            self.session = Session()
+            self.session.headers.update({"Accept": "application/json"})
+            self.session.headers.update({"Accept-Encoding": "gzip"})
+
+        # Prepare request
+        url = self.BASE_URL + endpoint
+        req = Request(method=verb, url=url, params=params)
+        prepped = self.session.prepare_request(req)
+        if self.api_key:
+            self._set_auth_headers(prepped)
+
+        # Send request
+        self.logger.info("Sending request to: {}".format(prepped.url))
+        response_object = await self.session.send(
+            prepped, timeout=self.request_timeout
+        )
+        response = self._handle_response(response_object)
+
+        # Retries (set to 0 on success)
+        if self.max_retries > 0:
+            if not response:
+                retry()
+            self.retries = 0
+
+        return response
+
+
 class CryptoWrapper:
     '''Wrapper for Cryptocurrency APIs
 
@@ -1695,7 +2007,8 @@ class CryptoWrapper:
         api: str
             Available APIs:
                 "CMC", "CryptoCompare",
-                "BitMEX", "Binance", "BinanceDEX", "Bitfinex"
+                "BitMEX", "Binance", "BinanceDEX",
+                "Bitfinex", "Deribit"
         asynchronous: bool = False
         api_key: str = None
         api_secret: str = None
@@ -1715,7 +2028,8 @@ class CryptoWrapper:
         "BitMEX": BitMEX,
         "Binance": Binance,
         "BinanceDEX": BinanceDEX,
-        "Bitfinex": Bitfinex
+        "Bitfinex": Bitfinex,
+        "Deribit": Deribit
     }
 
     def __init__(self, api: str, **kwargs):
