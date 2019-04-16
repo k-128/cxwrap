@@ -2,12 +2,13 @@ import logging
 import json
 from time import time
 
-from src.util.logger import setup_logger
 from src.cryptowrapper import CryptoWrapper
+from util.logger import setup_logger
 
 
 def main():
-    logger = logging.getLogger(f"_.{__name__}")
+    setup_logger()
+    logger = logging.getLogger()
 
     def cmc_examples():
         with open("bin/keys/cmc_k.txt", "r") as f:
@@ -20,6 +21,9 @@ def main():
             max_retries=1
         )
         cmc_wrapper = cmc.wrapper
+
+        # Get list of available endpoints (functions)
+        # logger.info(cmc_wrapper.__getfunctions__())
 
         resp = cmc_wrapper.global_aggregate_metrics_latest_GET()
         logger.info(resp["data"]["quote"]["USD"]["total_market_cap"])
@@ -35,6 +39,9 @@ def main():
             api_key=cryptocompare_key
         )
         cryptocompare_wrapper = cryptocompare.wrapper
+
+        # Get list of available endpoints (functions)
+        # logger.info(cryptocompare_wrapper.__getfunctions__())
 
         resp = cryptocompare_wrapper.price_GET(
             fsym="BTC", tsyms="USD,JPY,EUR"
@@ -82,6 +89,9 @@ def main():
             resp = bitmex_wrapper.chat_GET(count=2)
             logger.info(resp[0]["date"])
 
+        # Get list of available endpoints (functions)
+        # logger.info(bitmex_wrapper.__getfunctions__())
+
         example_1()
         # example_2()
         # example_3()
@@ -125,6 +135,9 @@ def main():
             )
             logger.info(resp)
 
+        # Get list of available endpoints (functions)
+        # logger.info(binance_wrapper.__getfunctions__())
+
         example_1()
         # example_2()
         # example_3()
@@ -136,6 +149,9 @@ def main():
         )
         binance_dex_wrapper = binance_dex.wrapper
 
+        # Get list of available endpoints (functions)
+        # logger.info(binance_dex_wrapper.__getfunctions__())
+
         resp = binance_dex_wrapper.fees_GET()
         logger.info(resp)
         resp = binance_dex_wrapper.tokens_GET()
@@ -144,6 +160,9 @@ def main():
     def bitfinex_examples():
         bitfinex = CryptoWrapper(api="Bitfinex")
         bitfinex_wrapper = bitfinex.wrapper
+
+        # Get list of available endpoints (functions)
+        # logger.info(bitfinex_wrapper.__getfunctions__())
 
         resp = bitfinex_wrapper.platform_status_GET()
         logger.info(resp)
@@ -189,23 +208,25 @@ def main():
             )
             logger.info(resp)
 
+        # Get list of available endpoints (functions)
+        # logger.info(deribit_wrapper.__getfunctions__())
+
         example_1()
         # example_2()
         # example_3()
 
     try:
-        # cmc_examples()
+        cmc_examples()
         # cryptocompare_examples()
         # bitmex_examples()
         # binance_examples()
         # binance_dex_examples()
         # bitfinex_examples()
-        deribit_examples()
+        # deribit_examples()
 
     except Exception as e:
         logger.info(f"Exception: {e}")
 
 
 if __name__ == "__main__":
-    setup_logger()
     main()

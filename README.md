@@ -10,6 +10,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, in order to allow users to more freely implement their own logic.<br/>
@@ -36,7 +40,7 @@ Rate limits informations generally present in responses to simplify the implemen
 
 CoinMarketCap.global_aggregate_metrics_latest_GET()
 ```python
->>> from src.cryptowrapper import CryptoWrapper
+>>> from cryptowrapper import CryptoWrapper
 >>> api_key = "Declare you API key"
 >>> cmc = CryptoWrapper(api="CMC", api_key=api_key, cache_expire=240)
 >>> cmc_wrapper = cmc.wrapper
@@ -72,7 +76,7 @@ CoinMarketCap.global_aggregate_metrics_latest_GET()
 
 BitMEX.chat_GET()
 ```python
->>> from src.cryptowrapper import CryptoWrapper
+>>> from cryptowrapper import CryptoWrapper
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> bitmex = CryptoWrapper(api="BitMEX", api_key=api_key, api_secret=api_secret)
@@ -113,7 +117,7 @@ BitMEX.chat_GET()
 
 Binance.ping_GET()
 ```python
->>> from src.cryptowrapper import CryptoWrapper
+>>> from cryptowrapper import CryptoWrapper
 >>> binance = CryptoWrapper(api="Binance")
 >>> binance_wrapper = binance.wrapper
 >>> binance_wrapper.ping_GET()
@@ -124,13 +128,45 @@ Binance.ping_GET()
 
 <br/>
 
+BinanceDEX.__getfunctions__()
+```python
+>>> from cryptowrapper import CryptoWrapper
+>>> binance_dex = CryptoWrapper(api="BinanceDEX")
+>>> binance_dex_wrapper = binance_dex.wrapper
+>>> binance_dex_wrapper.__getfunctions__()
+[
+    'account_GET',
+    'account_sequence_GET',
+    'broadcast_POST',
+    'fees_GET',
+    'klines_GET',
+    'markets_GET',
+    'node_info_GET',
+    'orderbook_GET',
+    'orders_closed_GET',
+    'orders_id_GET',
+    'orders_open_GET',
+    'peers_GET',
+    'ticker_24h_GET',
+    'time_GET',
+    'tokens_GET',
+    'trades_GET',
+    'transaction_GET',
+    'transaction_json_GET',
+    'transactions_GET',
+    'validators_GET'
+]
+```
+
+<br/>
+
 For a quick combined example see: [example.py](/test/example.py)<br/>
 For the async version see: [async_example.py](/test/async_example.py)
 
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

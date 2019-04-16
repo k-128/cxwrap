@@ -1,20 +1,17 @@
 import logging
 import os
-from logging import handlers
+from time import strftime, gmtime
 
 
 LOGS_DIR = os.path.dirname(__file__) + "/../../bin/logs/"
-'''Available loggers:
-"_"
-'''
 
 
-def setup_logger(filename="CryptoWrapper", logger="_"):
+def setup_logger(filename="CryptoWrapper", logger=""):
     '''Set logger streams
 
     Optional params:
         filename: str = "CryptoWrapper"
-        logger: str = "_"
+        logger: str = ""
     '''
     logger = logging.getLogger(logger)
     logger.setLevel(logging.INFO)
@@ -25,15 +22,12 @@ def setup_logger(filename="CryptoWrapper", logger="_"):
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-    # Logs stream to a new file daily
-    filename = "{}/{}".format(LOGS_DIR, filename)
-    hdlr = handlers.TimedRotatingFileHandler(
-        filename=filename,
-        when="midnight",
-        interval=1,
+    # Logs stream to a file
+    date = strftime("%Y_%m_%d", gmtime())
+    hdlr = logging.FileHandler(
+        f"{LOGS_DIR}/CryptoWrapper_{date}.log",
         encoding="utf-8"
     )
-    hdlr.suffix = "%Y_%m_%d.log"
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr)
 

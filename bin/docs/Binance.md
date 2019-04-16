@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -76,7 +80,7 @@ The method exchange_information_GET() will return rate limit infos.<br/>
 
 Binance.ping_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import Binance
+>>> from cryptowrapper import Binance
 >>> binance = Binance()
 >>> binance.ping_GET()
 {
@@ -92,7 +96,7 @@ Binance.ping_GET() (+ cache example)
 
 Binance.price_GET()
 ```python
->>> from src.cryptowrapper import Binance
+>>> from cryptowrapper import Binance
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> binance = Binance(api_key=api_key, api_secret=api_secret)
@@ -109,7 +113,7 @@ Binance.price_GET()
 Binance.order_test_POST()
 ```python
 >>> import time
->>> from src.cryptowrapper import Binance
+>>> from cryptowrapper import Binance
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> binance = Binance(api_key=api_key, api_secret=api_secret)
@@ -136,8 +140,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
 
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

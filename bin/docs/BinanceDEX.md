@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -52,7 +56,7 @@ Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 
 BinanceDEX.time_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import BinanceDEX
+>>> from cryptowrapper import BinanceDEX
 >>> binance_dex = BinanceDEX()
 >>> binance_dex.time_GET()
 {
@@ -72,7 +76,7 @@ BinanceDEX.time_GET() (+ cache example)
 
 BinanceDEX.account_GET()
 ```python
->>> from src.cryptowrapper import BinanceDEX
+>>> from cryptowrapper import BinanceDEX
 >>> binance_dex = BinanceDEX()
 >>> address = "tbnb138u9djee6fwphhd2a3628q2h0j5w97yx48zqex"
 >>> binance_dex.account_GET(address=address)
@@ -119,7 +123,7 @@ BinanceDEX.account_GET()
 
 BinanceDEX.orderbook_GET()
 ```python
->>> from src.cryptowrapper import BinanceDEX
+>>> from cryptowrapper import BinanceDEX
 >>> binance_dex = BinanceDEX()
 >>> symbol = "TUSD.B-241_BNB"
 >>> binance_dex.orderbook_GET(symbol=symbol)
@@ -177,7 +181,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

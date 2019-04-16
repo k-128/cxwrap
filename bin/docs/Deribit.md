@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -100,7 +104,7 @@ Rate limits are returned in ratelimit: "limit", "remaining", "reset".<br/>
 
 Deribit.announcements_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import Deribit
+>>> from cryptowrapper import Deribit
 >>> deribit = Deribit()
 >>> deribit.get_time_GET()
 {
@@ -128,7 +132,7 @@ Deribit.announcements_GET() (+ cache example)
 
 Deribit.get_contract_size_GET()
 ```python
->>> from src.cryptowrapper import Deribit
+>>> from cryptowrapper import Deribit
 >>> deribit = Deribit()
 >>> deribit.get_contract_size_GET(instrument_name="BTC-PERPETUAL")
 {
@@ -148,7 +152,7 @@ Deribit.get_contract_size_GET()
 
 Deribit.order_POST()
 ```python
->>> from src.cryptowrapper import Deribit
+>>> from cryptowrapper import Deribit
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> deribit = Deribit(api_key=api_key, api_secret=api_secret)
@@ -202,7 +206,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -106,7 +110,7 @@ Rate limits are returned in ratelimit: "limit", "remaining", "reset".<br/>
 
 BitMEX.announcement_GET()
 ```python
->>> from src.cryptowrapper import BitMEX
+>>> from cryptowrapper import BitMEX
 >>> bitmex = BitMEX()
 >>> bitmex.announcement_GET(columns=["title", "date"])
 [
@@ -149,7 +153,7 @@ BitMEX.announcement_GET()
 
 BitMEX.chat_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import BitMEX
+>>> from cryptowrapper import BitMEX
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> bitmex = BitMEX(api_key=api_key, api_secret=api_secret)
@@ -219,7 +223,7 @@ BitMEX.chat_GET() (+ cache example)
 
 BitMEX.order_POST()
 ```python
->>> from src.cryptowrapper import BitMEX
+>>> from cryptowrapper import BitMEX
 >>> api_key = "Declare you API key"
 >>> api_secret = "Declare you API secret"
 >>> bitmex = BitMEX(api_key=api_key, api_secret=api_secret)
@@ -275,7 +279,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

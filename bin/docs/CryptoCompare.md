@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -83,7 +87,7 @@ Rate limits are returned in status: "elapsed", "credit_count".<br/>
 
 CryptoCompare.price_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import CryptoCompare
+>>> from cryptowrapper import CryptoCompare
 >>> api_key = "Declare you API key"
 >>> cryptocompare = CryptoCompare(api_key, cache_expire=240)
 >>> cryptocompare.price_GET(fsym="BTC", tsyms="USD,JPY,EUR")
@@ -106,7 +110,7 @@ CryptoCompare.price_GET() (+ cache example)
 
 CryptoCompare.historical_daily_ohlcv_GET()
 ```python
->>> from src.cryptowrapper import CryptoCompare
+>>> from cryptowrapper import CryptoCompare
 >>> api_key = "Declare you API key"
 >>> cryptocompare = CryptoCompare(api_key, cache_expire=240)
 >>> cryptocompare..historical_daily_ohlcv_GET(fsym="BTC", tsym="USD", limit=1)
@@ -155,7 +159,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>

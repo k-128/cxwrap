@@ -16,6 +16,10 @@
 
 <br/>
 
+### Installation:
+
+`pip install xnr-cryptowrapper` <br/>
+
 ### Functions:
 
 Build around raw API commands, each endpoint is made directly available.<br/>
@@ -58,7 +62,7 @@ Rate limits are returned in status: "elapsed", "credit_count".<br/>
 
 CoinMarketCap.global_aggregate_metrics_latest_GET() (+ cache example)
 ```python
->>> from src.cryptowrapper import CoinMarketCap
+>>> from cryptowrapper import CoinMarketCap
 >>> api_key = "Declare you API key"
 >>> cmc = CoinMarketCap(api_key, cache_expire=240)
 >>> cmc.global_aggregate_metrics_latest_GET(convert="GBP")
@@ -119,7 +123,7 @@ CoinMarketCap.global_aggregate_metrics_latest_GET() (+ cache example)
 
 CoinMarketCap.cryptocurrency_map_GET()
 ```python
->>> from src.cryptowrapper import CoinMarketCap
+>>> from cryptowrapper import CoinMarketCap
 >>> api_key = "Declare your API key"
 >>> cmc = CoinMarketCap(api_key)
 >>> cmc.cryptocurrency_map_GET(listing_status="active", start=1, limit=2)
@@ -165,7 +169,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
-Constructive feedback, bug reports & donations are always welcome.
-* Mail: ``
-* PGP Key: ``
-* BTC Address: ``
+
+Constructive feedback & bug reports are always welcome. <br/>
+Contact informations:
+* <a href="https://github.com/xnr-k"> github </a>
