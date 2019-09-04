@@ -12,7 +12,7 @@
 
 > Handles configurable requests cache, retries and general request errors.<br/>
 
-> Supports the latest API version: https://docs.bitfinex.com/v2/docs/
+> Supports the latest API version: https://docs.bitfinex.com/
 
 <br/>
 
@@ -26,51 +26,99 @@ Build around raw API commands, each endpoint is made directly available.<br/>
 Currently supported endpoints, **_functions_**:<br/>
 
   * **Public**
-    - [x] platform_status_GET
-    - [x] ticker_GET
-    - [x] tickers_GET
-    - [x] trades_GET
-    - [x] stats_GET
-    - [x] candles_GET
+    - API V1
+      * [x] v1_ticker_GET
+      * [x] v1_stats_GET
+      * [x] v1_fundingbook_GET
+      * [x] v1_orderbook_GET
+      * [x] v1_trades_GET
+      * [x] v1_lends_GET
+      * [x] v1_symbols_GET
+      * [x] v1_symbols_details_GET
+    - API V2
+      * [x] platform_status_GET
+      * [x] ticker_GET
+      * [x] tickers_GET
+      * [x] trades_GET
+      * [x] stats_GET
+      * [x] candles_GET
   * **Private**
-    - [x] alert_delete_POST
-    - [x] alert_list_POST
-    - [x] alert_set_POST
-    - [x] calculate_available_balance_POST
-    - [x] foreign_exchange_rate_POST
-    - [x] funding_credits_POST
-    - [x] funding_credits_history_POST
-    - [x] funding_info_POST
-    - [x] funding_loans_POST
-    - [x] funding_loans_history_POST
-    - [x] funding_offers_POST
-    - [x] funding_offers_history_POST
-    - [x] funding_trades_POST
-    - [x] ledgers_POST
-    - [x] margin_info_POST
-    - [x] market_average_price_POST
-    - [x] orderbook_GET
-    - [x] order_trades_POST
-    - [x] orders_POST
-    - [x] orders_history_POST
-    - [x] performance_POST
-    - [x] positions_POST
-    - [x] positions_audit_POST
-    - [x] positions_history_POST
-    - [x] trades_POST
-    - [x] user_info_POST
-    - [x] user_settings_delete_POST
-    - [x] user_settings_read_POST
-    - [x] user_settings_write_POST
-    - [x] wallet_movements_POST
-    - [x] wallets_POST
-    - [x] wallets_history_POST
+    - API V1
+      * [x] v1_account_info_POST
+      * [x] v1_account_fees_POST
+      * [x] v1_summary_POST
+      * [x] v1_deposit_POST
+      * [x] v1_key_permissions_POST
+      * [x] v1_margin_information_POST
+      * [x] v1_wallet_balances_POST
+      * [x] v1_transfer_between_balances_POST
+      * [x] v1_withdrawal_POST
+      * [x] v1_order_new_POST
+      * [x] v1_orders_new_POST
+      * [x] v1_order_cancel_POST
+      * [x] v1_orders_cancel_POST
+      * [x] v1_orders_cancel_all_POST
+      * [x] v1_order_replace_POST
+      * [x] v1_order_status_POST
+      * [x] v1_orders_active_POST
+      * [x] v1_orders_history_POST
+      * [x] v1_active_positions_POST
+      * [x] v1_claim_position_POST
+      * [x] v1_balance_history_POST
+      * [x] v1_deposit_withdrawal_history_POST
+      * [x] v1_past_trades_POST
+      * [x] v1_offer_new_POST
+      * [x] v1_offer_cancel_POST
+      * [x] v1_offer_status_POST
+      * [x] v1_credit__POST
+      * [x] v1_offers_POST
+      * [x] v1_offers_hist_POST
+      * [x] v1_past_funding_trades_POST
+      * [x] v1_taken_funds_POST
+      * [x] v1_taken_funds_unsused_POST
+      * [x] v1_taken_funds_total_POST
+      * [x] v1_margin_funding_close_POST
+      * [x] v1_basket_manage_POST
+      * [x] v1_close_position_POST
+    - API V2
+      * [x] alert_delete_POST
+      * [x] alert_list_POST
+      * [x] alert_set_POST
+      * [x] calculate_available_balance_POST
+      * [x] foreign_exchange_rate_POST
+      * [x] funding_credits_POST
+      * [x] funding_credits_history_POST
+      * [x] funding_info_POST
+      * [x] funding_loans_POST
+      * [x] funding_loans_history_POST
+      * [x] funding_offers_POST
+      * [x] funding_offers_history_POST
+      * [x] funding_trades_POST
+      * [x] ledgers_POST
+      * [x] margin_info_POST
+      * [x] market_average_price_POST
+      * [x] orderbook_GET
+      * [x] order_trades_POST
+      * [x] orders_POST
+      * [x] orders_history_POST
+      * [x] performance_POST
+      * [x] positions_POST
+      * [x] positions_audit_POST
+      * [x] positions_history_POST
+      * [x] trades_POST
+      * [x] user_info_POST
+      * [x] user_settings_delete_POST
+      * [x] user_settings_read_POST
+      * [x] user_settings_write_POST
+      * [x] wallet_movements_POST
+      * [x] wallets_POST
+      * [x] wallets_history_POST
 
 <br/>
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 
 Bitfinex.candles_GET() (+ cache example)
@@ -155,6 +203,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

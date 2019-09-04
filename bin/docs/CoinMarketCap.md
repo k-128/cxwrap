@@ -25,38 +25,42 @@
 Build around raw API commands, each endpoint is made directly available.<br/>
 Currently supported endpoints within their minimum pricing plans, **_functions_**:<br/>
 
-  * **Basic**
-    - [x] cryptocurrency_info_GET
+  * **Basic** (free)
     - [x] cryptocurrency_map_GET
+    - [x] cryptocurrency_info_GET
     - [x] cryptocurrency_listings_latest_GET
     - [x] cryptocurrency_quotes_latest_GET
-    - [x] global_aggregate_metrics_latest_GET
-  * **Hobbyist**
+    - [x] global_metrics_quotes_latest_GET
     - [x] tools_price_conversion_GET
+    - [x] fcas_listings_latest_GET
+    - [x] fcas_quotes_latest_GET
+    - [x] key_info_GET
+  * **Hobbyist**
   * **Startup**
-    - [x] exchange_info_GET
-    - [x] exchange_map_GET
     - [x] cryptocurrency_OHLCV_latest_GET
+    - [x] cryptocurrency_OHLCV_historical_GET
+    - [x] cryptocurrency_price_performance_stats_latest_GET
+    - [x] exchange_map_GET
+    - [x] exchange_info_GET
   * **Standard**
+    - [x] cryptocurrency_listings_historical_GET
+    - [x] cryptocurrency_quotes_historical_GET
+    - [x] cryptocurrency_market_pairs_latest_GET
     - [x] exchange_listings_latest_GET
     - [x] exchange_quotes_latest_GET
-    - [x] cryptocurrency_market_pairs_latest_GET
-    - [x] cryptocurrency_OHLCV_historical_GET
-    - [x] cryptocurrency_quotes_historical_GET
-    - [x] exchange_market_pairs_latest_GET
     - [x] exchange_quotes_historical_GET
-    - [x] global_aggregate_metrics_historical_GET
+    - [x] exchange_market_pairs_latest_GET
+    - [x] global_metrics_quotes_historical_GET
   * **Professional**
   * **Entreprise**
-  * Unreleased endpoints (Announced release: Q1 2019):
-    - [ ] cryptocurrency_listings_historical
-    - [ ] exchange_listings_historical
+  * Unreleased endpoints:
+    - [ ] exchange_listings_historical_GET
 
 <br/>
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 Rate limits are returned in status: "elapsed", "credit_count".<br/>
 
@@ -170,6 +174,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

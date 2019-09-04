@@ -56,6 +56,11 @@ Currently supported endpoints, **_functions_**:<br/>
       * [x] order_test_POST
       * [x] orders_all_GET
       * [x] orders_open_GET
+      * [x] order_OCO_POST
+      * [x] order_OCO_cancel_DELETE
+      * [x] order_OCO_GET
+      * [x] order_OCO_all_GET
+      * [x] order_OCO_open_GET
     - /wapi/v3
       * [x] sub_account_list_GET
       * [x] sub_account_transfer_POST
@@ -74,7 +79,7 @@ Currently supported endpoints, **_functions_**:<br/>
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 The method exchange_information_GET() will return rate limit infos.<br/>
 
@@ -141,6 +146,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

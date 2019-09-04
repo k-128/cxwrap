@@ -26,32 +26,33 @@ Build around raw API commands, each endpoint is made directly available.<br/>
 Currently supported endpoints, **_functions_**:<br/>
 
   * **Binance Chain HTTP API**
+    - [x] time_GET
+    - [x] node_info_GET
+    - [x] validators_GET
+    - [x] peers_GET
     - [x] account_GET
     - [x] account_sequence_GET
-    - [x] broadcast_POST
-    - [x] fees_GET
-    - [x] klines_GET
-    - [x] markets_GET
-    - [x] node_info_GET
-    - [x] orderbook_GET
-    - [x] orders_closed_GET
-    - [x] orders_id_GET
-    - [x] orders_open_GET
-    - [x] peers_GET
-    - [x] ticker_24h_GET
-    - [x] time_GET
-    - [x] tokens_GET
-    - [x] trades_GET
     - [x] transaction_GET
-    - [x] transaction_json_GET
+    - [x] tokens_GET
+    - [x] markets_GET
+    - [x] fees_GET
+    - [x] depth_GET
+    - [x] broadcast_POST
+    - [x] klines_GET
+    - [x] orders_closed_GET
+    - [x] orders_open_GET
+    - [x] orders_id_GET
+    - [x] ticker_24h_GET
+    - [x] trades_GET
+    - [x] block_exchange_fee_GET
     - [x] transactions_GET
-    - [x] validators_GET
+    - [x] transactions_in_block_GET
 
 <br/>
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 
 BinanceDEX.time_GET() (+ cache example)
@@ -182,6 +183,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

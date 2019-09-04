@@ -29,7 +29,7 @@ class CoinMarketCap:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     For more details, see: https://coinmarketcap.com/api/documentation/v1
@@ -37,34 +37,36 @@ class CoinMarketCap:
     BASE_URL: str = "https://pro-api.coinmarketcap.com/v1"
     _FUNCTIONS_ENDPOINTS = {
         # Basic endpoints (free)
-        "cryptocurrency_info_GET": "/cryptocurrency/info",
         "cryptocurrency_map_GET": "/cryptocurrency/map",
-        "cryptocurrency_listings_latest_GET": "/cryptocurrency" \
-                                              "/listings/latest",
+        "cryptocurrency_info_GET": "/cryptocurrency/info",
+        "cryptocurrency_listings_latest_GET": "/cryptocurrency/listings/latest",
         "cryptocurrency_quotes_latest_GET": "/cryptocurrency/quotes/latest",
-        "global_aggregate_metrics_latest_GET": "/global-metrics/quotes/latest",
-        # Hobbyist endpoints
+        "global_metrics_quotes_latest_GET": "/global-metrics/quotes/latest",
         "tools_price_conversion_GET": "/tools/price-conversion",
+        "fcas_listings_latest_GET": "/partners/flipside-crypto/fcas/listings/latest",
+        "fcas_quotes_latest_GET": "/partners/flipside-crypto/fcas/quotes/latest",
+        "key_info_GET": "key/info",
+        # Hobbyist endpoints
         # Startup endpoints
-        "exchange_info_GET": "/exchange/info",
-        "exchange_map_GET": "/exchange/map",
         "cryptocurrency_OHLCV_latest_GET": "/cryptocurrency/ohlcv/latest",
+        "cryptocurrency_OHLCV_historical_GET": "/cryptocurrency/ohlcv/historical",
+        "cryptocurrency_price_performance_stats_latest_GET": "/cryptocurrency/price-performance-stats/latest",
+        "exchange_map_GET": "/exchange/map",
+        "exchange_info_GET": "/exchange/info",
         # Standard endpoints
+        "cryptocurrency_listings_historical_GET": "/cryptocurrency/listings/historical",
+        "cryptocurrency_quotes_historical_GET": "/cryptocurrency/quotes/historical",
+        "cryptocurrency_market_pairs_latest_GET": "/cryptocurrency/market-pairs/latest",
         "exchange_listings_latest_GET": "/exchange/listings/latest",
         "exchange_quotes_latest_GET": "/exchange/quotes/latest",
-        "cryptocurrency_market_pairs_latest_GET": "/cryptocurrency" \
-                                                  "/market-pairs/latest",
-        "cryptocurrency_OHLCV_historical_GET": "/cryptocurrency" \
-                                               "/ohlcv/historical",
-        "cryptocurrency_quotes_historical_GET": "/cryptocurrency" \
-                                                "/quotes/historical",
-        "exchange_market_pairs_latest_GET": "/exchange/market-pairs/latest",
         "exchange_quotes_historical_GET": "/exchange/quotes/historical",
-        "global_aggregate_metrics_historical_GET": "/global-metrics" \
-                                                   "/quotes/historical"
+        "exchange_market_pairs_latest_GET": "/exchange/market-pairs/latest",
+        "global_metrics_quotes_historical_GET": "/global-metrics/quotes/historical",
 
         # Professional endpoints
         # Entreprise endpoints
+        # Not yet available
+        "exchange_listings_historical_GET": "/exchange/listings/historical",
     }
 
     def _create_class_function(self, function_name, endpoint, verb):
@@ -87,7 +89,7 @@ class CoinMarketCap:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, request_timeout: int = 10,
                  max_retries: int = 0, retry_time: int = 3,
-                 cache_expire: int = 120):
+                 cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -247,7 +249,7 @@ class CryptoCompare:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     For more details, see: https://min-api.cryptocompare.com/documentation
@@ -267,11 +269,18 @@ class CryptoCompare:
         "historical_daily_average_price_GET": "/data/dayAvg?",
         "historical_daily_exchange_volume_GET": "/data/exchange/histoday?",
         "historical_hourly_exchange_volume_GET": "/data/exchange/histohour?",
+        "daily_market_close_GET": "/data/daily/market/close",
+        # Pair mapping
+        "pair_mapping_symbol_latest_GET": "/data/pair/mapping/fsym?",
+        "pair_mapping_exchange_latest_GET": "/data/pair/mapping/exchange?",
+        "pair_mapping_exchange_from_symbol_latest_GET": "/data/pair/mapping/exchange/fsym?",
+        "pair_mapping_updates_GET": "/data/pair/mapping/planned/updates",
         # Toplists
         "toplist_24h_volume_full_GET": "/data/top/totalvolfull?",
+        "toplist_24h_top_tier_volume_full_GET": "/data/top/totaltoptiervolfull?",
         "toplist_market_cap_full_GET": "/data/top/mktcapfull?",
         "toplist_exchanges_volume_pair_GET": "/data/top/exchanges?",
-        "toplist_exchanges_full_pair_GET": "/data/top/exchanges/",
+        "toplist_exchanges_full_pair_GET": "/data/top/exchanges/full?",
         "toplist_pair_volume_GET": "/data/top/volumes?",
         "toplist_trading_pairs_GET": "/data/top/pairs?",
         # Social data
@@ -285,22 +294,30 @@ class CryptoCompare:
         "news_feeds_and_categories_GET": "/data/news/feedsandcategories",
         # Orderbook
         "orderbook_exchanges_list_GET": "/data/ob/l2/exchanges",
+        "orderbook_l1_top_GET": "/data/ob/l1/top?",
         "orderbook_l2_snapshot_GET": "/data/ob/l2/snapshot",
         # General info
         "rate_limit_GET": "/stats/rate/limit",
         "rate_limit_hour_GET": "/stats/rate/hour/limit",
         "list_exchanges_and_trading_pairs_GET": "/data/v2/all/exchanges",
         "instrument_constituent_exchanges_GET": "/data/all/includedexchanges",
+        "CCCAGG_constituent_pairs_GET": "/data/cccagg/pairs",
+        "CCCAGG_excluded_pairs_GET": "/data/cccagg/pairs/excluded",
+        "CCCAGG_absent_pairs_GET": "/data/cccagg/pairs/absent",
+        "CCCAGG_absent_coins_GET": "/data/cccagg/coins/absent",
         "list_coins_GET": "/data/all/coinlist",
         "info_exchanges_GET": "/data/exchanges/general",
+        "info_gambling_GET": "/data/gambling/general",
         "info_wallets_GET": "/data/wallets/general",
         "info_crypto_cards_GET": "/data/cards/general",
         "info_mining_contracts_GET": "/data/mining/contracts/general",
+        "info_mining_companies_GET": "/data/mining/companies/general",
         "info_mining_equipment_GET": "/data/mining/equipment/general",
         "info_mining_pools_GET": "/data/mining/pools/general",
-        "list_pair_remapping_events_GET": "/data/pair/re-mapping",
+        "info_recommended_entities_GET": "/data/recommended/all",
         # Streaming
         "toplist_24h_volume_subscriptions_GET": "/data/top/totalvol?",
+        "toplist_24h_top_tier_volume_subscriptions_GET": "/data/top/totaltoptiervol?",
         "toplist_market_cap_subscriptions_GET": "/data/top/mktcap?",
         "subs_by_pair_GET": "/data/subs?",
         "subs_watchlist_GET": "/data/subsWatchlist?",
@@ -327,7 +344,7 @@ class CryptoCompare:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, request_timeout: int = 10,
                  max_retries: int = 0, retry_time: int = 3,
-                 cache_expire: int = 120):
+                 cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -494,7 +511,7 @@ class BitMEX:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     To alternate between mainnet & testnet:
@@ -601,7 +618,7 @@ class BitMEX:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, api_secret: str = None,
                  request_timeout: int = 10, max_retries: int = 0,
-                 retry_time: int = 3,  cache_expire: int = 120):
+                 retry_time: int = 3, cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -796,7 +813,7 @@ class Binance:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     For more details, see:
@@ -833,13 +850,16 @@ class Binance:
         "order_test_POST": "/api/v3/order/test",
         "orders_all_GET": "/api/v3/allOrders",
         "orders_open_GET": "/api/v3/openOrders",
+        "order_OCO_POST": "/api/v3/order/oco",
+        "order_OCO_cancel_DELETE": "/api/v3/orderList",
+        "order_OCO_GET": "/api/v3/orderList",
+        "order_OCO_all_GET": "/api/v3/allOrderList",
+        "order_OCO_open_GET": "/api/v3/openOrderList",
         # Private endpoints (/wapi/v3)
         "sub_account_list_GET": "/wapi/v3/sub-account/list.html",
         "sub_account_transfer_POST": "/wapi/v3/sub-account/transfer.html",
-        "sub_account_transfer_history_GET": "/wapi/v3/sub-account/transfer" \
-                                            "/history.html",
-        "user_account_API_trading_status_GET": "/wapi/v3" \
-                                               "/apiTradingStatus.html",
+        "sub_account_transfer_history_GET": "/wapi/v3/sub-account/transfer/history.html",
+        "user_account_API_trading_status_GET": "/wapi/v3/apiTradingStatus.html",
         "user_account_status_GET": "/wapi/v3/accountStatus.html",
         "user_asset_detail_GET": "/wapi/v3/assetDetail.html",
         "user_dustlog_GET": "/wapi/v3/userAssetDribbletLog.html",
@@ -870,7 +890,7 @@ class Binance:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, api_secret: str = None,
                  request_timeout: int = 10, max_retries: int = 0,
-                 retry_time: int = 3, cache_expire: int = 120):
+                 retry_time: int = 3, cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -1053,7 +1073,7 @@ class BinanceDEX:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     For more details, see:
@@ -1062,49 +1082,53 @@ class BinanceDEX:
     BASE_URL: str = "https://testnet-dex.binance.org"
     _FUNCTIONS_ENDPOINTS = {
         # Binance Chain HTTP API
+        "time_GET": "/api/v1/time",
+        "node_info_GET": "/api/v1/node-info",
+        "validators_GET": "/api/v1/validators",
+        "peers_GET": "/api/v1/peers",
         "account_GET": "/api/v1/account/",
         "account_sequence_GET": "/api/v1/account/",
-        "broadcast_POST": "/api/v1/broadcast",
-        "fees_GET": "/api/v1/fees",
-        "klines_GET": "/api/v1/klines",
-        "markets_GET": "/api/v1/markets",
-        "node_info_GET": "/api/v1/node-info",
-        "orderbook_GET": "/api/v1/depth",
-        "orders_closed_GET": "/api/v1/orders/closed",
-        "orders_id_GET": "/api/v1/orders/",
-        "orders_open_GET": "/api/v1/orders/open",
-        "peers_GET": "/api/v1/peers",
-        "ticker_24h_GET": "/api/v1/ticker/24hr",
-        "time_GET": "/api/v1/time",
-        "tokens_GET": "/api/v1/tokens",
-        "trades_GET": "/api/v1/trades",
         "transaction_GET": "/api/v1/tx/",
-        "transaction_json_GET": "/api/v1/tx-json/",
+        "tokens_GET": "/api/v1/tokens",
+        "markets_GET": "/api/v1/markets",
+        "fees_GET": "/api/v1/fees",
+        "depth_GET": "/api/v1/depth",
+        "broadcast_POST": "/api/v1/broadcast",
+        "klines_GET": "/api/v1/klines",
+        "orders_closed_GET": "/api/v1/orders/closed",
+        "orders_open_GET": "/api/v1/orders/open",
+        "orders_id_GET": "/api/v1/orders/",
+        "ticker_24h_GET": "/api/v1/ticker/24hr",
+        "trades_GET": "/api/v1/trades",
+        "block_exchange_fee_GET": "/api/v1/block-exchange-fee",
         "transactions_GET": "/api/v1/transactions",
-        "validators_GET": "/api/v1/validators"
+        "transactions_in_block_GET": "/api/v1/transactions-in-block/",
     }
 
     def _create_class_function(self, function_name, endpoint, verb):
+        def _set_endpoint(address=None, _hash=None,
+                          order_id=None, body=None, **kwargs):
+            _endpoint = endpoint
+            if function_name == "account_GET":
+                _endpoint = endpoint + str(address)
+            elif function_name == "account_sequence_GET":
+                _endpoint = endpoint + str(address) + "/sequence"
+            elif function_name == "transactions_GET":
+                _endpoint = endpoint + str(_hash)
+            elif function_name == "transaction_json_GET":
+                _endpoint = endpoint + str(_hash)
+            elif function_name == "orders_id_GET":
+                _endpoint = endpoint + str(order_id)
+
+            return _endpoint
+
         if not self.asynchronous:
             def _endpoint_request(self, address=None, _hash=None,
                                   order_id=None, body=None, **kwargs):
-                _endpoint = endpoint
-
-                if function_name == "account_GET":
-                    _endpoint = endpoint + str(address)
-
-                elif function_name == "account_sequence_GET":
-                    _endpoint = endpoint + str(address) + "/sequence"
-
-                elif function_name == "transactions_GET":
-                    _endpoint = endpoint + str(_hash)
-
-                elif function_name == "transaction_json_GET":
-                    _endpoint = endpoint + str(_hash)
-
-                elif function_name == "orders_id_GET":
-                    _endpoint = endpoint + str(order_id)
-
+                _endpoint = _set_endpoint(
+                    address=address, _hash=_hash,
+                    order_id=order_id, body=body, kwargs=kwargs
+                )
                 response = self._request(_endpoint, verb, kwargs, body)
                 return response
 
@@ -1113,23 +1137,10 @@ class BinanceDEX:
         else:
             async def _endpoint_request(self, address=None, _hash=None,
                                         order_id=None, body=None, **kwargs):
-                _endpoint = endpoint
-
-                if function_name == "account_GET":
-                    _endpoint = endpoint + str(address)
-
-                elif function_name == "account_sequence_GET":
-                    _endpoint = endpoint + str(address) + "/sequence"
-
-                elif function_name == "transactions_GET":
-                    _endpoint = endpoint + str(_hash)
-
-                elif function_name == "transaction_json_GET":
-                    _endpoint = endpoint + str(_hash)
-
-                elif function_name == "orders_id_GET":
-                    _endpoint = endpoint + str(order_id)
-
+                _endpoint = _set_endpoint(
+                    address=address, _hash=_hash,
+                    order_id=order_id, body=body, kwargs=kwargs
+                )
                 response = await self._request_async(
                     _endpoint, verb, kwargs, body
                 )
@@ -1139,7 +1150,7 @@ class BinanceDEX:
 
     def __init__(self, asynchronous: bool = False,
                  request_timeout: int = 10, max_retries: int = 0,
-                 retry_time: int = 3, cache_expire: int = 120):
+                 retry_time: int = 3, cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -1301,7 +1312,7 @@ class Bitfinex:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     For more details, see: https://docs.bitfinex.com/v2/docs
@@ -1310,6 +1321,54 @@ class Bitfinex:
     _API: str = "api.bitfinex.com"
     _API_Pub: str = "api-pub.bitfinex.com"
     _FUNCTIONS_ENDPOINTS = {
+        # API V1
+        # Public endpoints
+        "v1_ticker_GET": f"{_API}/v1/pubticker/",
+        "v1_stats_GET": f"{_API}/v1/stats/",
+        "v1_fundingbook_GET": f"{_API}/v1/lendbook/",
+        "v1_orderbook_GET": f"{_API}/v1/book/",
+        "v1_trades_GET": f"{_API}/v1/trades/",
+        "v1_lends_GET": f"{_API}/v1/lends/",
+        "v1_symbols_GET": f"{_API}/v1/symbols",
+        "v1_symbols_details_GET": f"{_API}/v1/symbols_details",
+        # Private endpoints
+        "v1_account_info_POST": f"{_API}/v1/account_infos",
+        "v1_account_fees_POST": f"{_API}/v1/account_fees",
+        "v1_summary_POST": f"{_API}/v1/summary",
+        "v1_deposit_POST": f"{_API}/v1/deposit/new",
+        "v1_key_permissions_POST": f"{_API}/v1/key_info",
+        "v1_margin_information_POST": f"{_API}/v1/margin_infos",
+        "v1_wallet_balances_POST": f"{_API}/v1/balances",
+        "v1_transfer_between_balances_POST": f"{_API}/v1/transfer",
+        "v1_withdrawal_POST": f"{_API}/v1/withdraw",
+        "v1_order_new_POST": f"{_API}/v1/order/new",
+        "v1_orders_new_POST": f"{_API}/v1/order/new/multi",
+        "v1_order_cancel_POST": f"{_API}/v1/order/cancel",
+        "v1_orders_cancel_POST": f"{_API}/v1/order/cancel/multi",
+        "v1_orders_cancel_all_POST": f"{_API}/v1/order/cancel/all",
+        "v1_order_replace_POST": f"{_API}/v1/order/cancel/replace",
+        "v1_order_status_POST": f"{_API}/v1/order/status",
+        "v1_orders_active_POST": f"{_API}/v1/orders",
+        "v1_orders_history_POST": f"{_API}/v1/orders/hist",
+        "v1_active_positions_POST": f"{_API}/v1/positions",
+        "v1_claim_position_POST": f"{_API}/v1/position/claim",
+        "v1_balance_history_POST": f"{_API}/v1/history",
+        "v1_deposit_withdrawal_history_POST": f"{_API}/v1/history/movements",
+        "v1_past_trades_POST": f"{_API}/v1/mytrades",
+        "v1_offer_new_POST": f"{_API}/v1/offer/new",
+        "v1_offer_cancel_POST": f"{_API}/v1/offer/cancel",
+        "v1_offer_status_POST": f"{_API}/v1/offer/status",
+        "v1_credit__POST": f"{_API}/v1/credits",
+        "v1_offers_POST": f"{_API}/v1/offers",
+        "v1_offers_hist_POST": f"{_API}/v1/offers/hist",
+        "v1_past_funding_trades_POST": f"{_API}/v1/mytrades_funding",
+        "v1_taken_funds_POST": f"{_API}/v1/taken_funds",
+        "v1_taken_funds_unsused_POST": f"{_API}/v1/unused_taken_funds",
+        "v1_taken_funds_total_POST": f"{_API}/v1/total_taken_funds",
+        "v1_margin_funding_close_POST": f"{_API}/v1/funding/close",
+        "v1_basket_manage_POST": f"{_API}/v1/basket_manage",
+        "v1_close_position_POST": f"{_API}/v1/position/close",
+        # API V2
         # Public endpoints
         "platform_status_GET": f"{_API_Pub}/v2/platform/status",
         "tickers_GET": f"{_API_Pub}/v2/tickers",
@@ -1354,6 +1413,84 @@ class Bitfinex:
     }
 
     def _create_class_function(self, function_name, endpoint, verb):
+        def _set_endpoint(symbol=None, precision=None,
+                          key=None, size=None, section=None,
+                          end=None, timeframe=None,
+                          order_id=None, currency=None,
+                          price=None, keys=None, ids=None,
+                          body=None, settings=None, **kwargs):
+            params = {}
+            params.update(kwargs)
+            _endpoint = endpoint
+            # API V1
+            if function_name == "v1_ticker_GET":
+                _endpoint = f"{endpoint}{symbol}"
+            elif function_name == "v1_stats_GET":
+                _endpoint = f"{endpoint}{symbol}"
+            elif function_name == "v1_fundingbook_GET":
+                _endpoint = f"{endpoint}{currency}"
+            elif function_name == "v1_orderbook_GET":
+                _endpoint = f"{endpoint}{symbol}"
+            elif function_name == "v1_trades_GET":
+                _endpoint = f"{endpoint}{symbol}"
+            elif function_name == "v1_lends_GET":
+                _endpoint = f"{endpoint}{currency}"
+            # API V2
+            elif function_name == "trades_GET":
+                _endpoint = endpoint + str(symbol) + "/hist"
+            elif function_name == "orderbook_GET":
+                _endpoint = endpoint + str(symbol) + str(precision)
+            elif function_name == "stats_GET":
+                _endpoint = f"{endpoint}/{key}:{size}:{symbol}/{section}"
+            elif function_name == "candles_GET":
+                _endpoint = f"{endpoint}:{timeframe}:{symbol}/{section}"
+            elif function_name == "wallets_history_POST":
+                body = {}
+                body.update(end)
+            elif function_name == "positions_audit_POST":
+                body = {"id": ids}
+            elif function_name == "order_trades_POST":
+                _endpoint = f"{endpoint}/{symbol}:{order_id}/trades"
+            elif function_name == "margin_info_POST":
+                _endpoint = endpoint + str(key)
+            elif function_name == "wallet_movements_POST":
+                endpt_2 = f"/{currency}/hist" if currency else "/hist"
+                _endpoint = endpoint + endpt_2
+            elif function_name == "alert_delete_POST":
+                _endpoint = endpoint + f":{symbol}:{price}/del"
+            elif function_name == "user_settings_read_POST":
+                body = {"keys": keys}
+            elif function_name == "user_settings_write_POST":
+                body = {"settings": settings}
+            elif function_name == "user_settings_delete_POST":
+                body = {"settings": settings}
+            elif (function_name == "ticker_GET"
+                    or function_name == "funding_offers_POST"
+                    or function_name == "funding_loans_POST"
+                    or function_name == "funding_credits_POST"
+                    or function_name == "funding_info_POST"
+                    or function_name == "funding_loans_POST"):
+                _endpoint = endpoint + str(symbol)
+            elif (function_name == "foreign_exchange_rate_POST"
+                    or function_name == "positions_history_POST"
+                    or function_name == "alert_set_POST"
+                    or function_name == "calculate_available_balance_POST"
+                    or function_name == "positions_history_POST"):
+                params = {}
+                body = {}
+                body.update(kwargs)
+            elif (function_name == "orders_history_POST"
+                    or function_name == "trades_POST"
+                    or function_name == "funding_offers_history_POST"
+                    or function_name == "funding_loans_history_POST"
+                    or function_name == "funding_credits_history_POST"
+                    or function_name == "funding_trades_POST"
+                    or function_name == "ledgers_POST"):
+                endpoint_2 = f"/{symbol}/hist" if symbol else "/hist"
+                _endpoint = endpoint + endpoint_2
+
+            return (_endpoint, params, body)
+
         if not self.asynchronous:
             def _endpoint_request(self, symbol=None, precision=None,
                                   key=None, size=None, section=None,
@@ -1361,78 +1498,14 @@ class Bitfinex:
                                   order_id=None, currency=None,
                                   price=None, keys=None, ids=None,
                                   body=None, settings=None, **kwargs):
-                params = {}
-                params.update(kwargs)
-                _endpoint = endpoint
-
-                if function_name == "trades_GET":
-                    _endpoint = endpoint + str(symbol) + "/hist"
-
-                elif function_name == "orderbook_GET":
-                    _endpoint = endpoint + str(symbol) + str(precision)
-
-                elif function_name == "stats_GET":
-                    _endpoint = f"{endpoint}/{key}:{size}:{symbol}/{section}"
-
-                elif function_name == "candles_GET":
-                    _endpoint = f"{endpoint}:{timeframe}:{symbol}/{section}"
-
-                elif function_name == "wallets_history_POST":
-                    body = {}
-                    body.update(end)
-
-                elif function_name == "positions_audit_POST":
-                    body = {"id": ids}
-
-                elif function_name == "order_trades_POST":
-                    _endpoint = f"{endpoint}/{symbol}:{order_id}/trades"
-
-                elif function_name == "margin_info_POST":
-                    _endpoint = endpoint + str(key)
-
-                elif function_name == "wallet_movements_POST":
-                    endpt_2 = f"/{currency}/hist" if currency else "/hist"
-                    _endpoint = endpoint + endpt_2
-
-                elif function_name == "alert_delete_POST":
-                    _endpoint = endpoint + f":{symbol}:{price}/del"
-
-                elif function_name == "user_settings_read_POST":
-                    body = {"keys": keys}
-
-                elif function_name == "user_settings_write_POST":
-                    body = {"settings": settings}
-
-                elif function_name == "user_settings_delete_POST":
-                    body = {"settings": settings}
-
-                elif (function_name == "ticker_GET"
-                        or function_name == "funding_offers_POST"
-                        or function_name == "funding_loans_POST"
-                        or function_name == "funding_credits_POST"
-                        or function_name == "funding_info_POST"
-                        or function_name == "funding_loans_POST"):
-                    _endpoint = endpoint + str(symbol)
-
-                elif (function_name == "foreign_exchange_rate_POST"
-                        or function_name == "positions_history_POST"
-                        or function_name == "alert_set_POST"
-                        or function_name == "calculate_available_balance_POST"
-                        or function_name == "positions_history_POST"):
-                    params = {}
-                    body = {}
-                    body.update(kwargs)
-
-                elif (function_name == "orders_history_POST"
-                        or function_name == "trades_POST"
-                        or function_name == "funding_offers_history_POST"
-                        or function_name == "funding_loans_history_POST"
-                        or function_name == "funding_credits_history_POST"
-                        or function_name == "funding_trades_POST"
-                        or function_name == "ledgers_POST"):
-                    endpoint_2 = f"/{symbol}/hist" if symbol else "/hist"
-                    _endpoint = endpoint + endpoint_2
-
+                _endpoint, params, body = _set_endpoint(
+                    symbol=symbol, precision=precision,
+                    key=key, size=size, section=section,
+                    end=end, timeframe=timeframe,
+                    order_id=order_id, currency=currency,
+                    price=price, keys=keys, ids=ids,
+                    body=body, settings=settings, kwargs=kwargs
+                )
                 response = self._request(_endpoint, verb, params, body)
                 return response
 
@@ -1445,78 +1518,14 @@ class Bitfinex:
                                         order_id=None, currency=None,
                                         price=None, keys=None, ids=None,
                                         body=None, settings=None, **kwargs):
-                params = {}
-                params.update(kwargs)
-                _endpoint = endpoint
-
-                if function_name == "trades_GET":
-                    _endpoint = endpoint + str(symbol) + "/hist"
-
-                elif function_name == "orderbook_GET":
-                    _endpoint = endpoint + str(symbol) + str(precision)
-
-                elif function_name == "stats_GET":
-                    _endpoint = f"{endpoint}/{key}:{size}:{symbol}/{section}"
-
-                elif function_name == "candles_GET":
-                    _endpoint = f"{endpoint}:{timeframe}:{symbol}/{section}"
-
-                elif function_name == "wallets_history_POST":
-                    body = {}
-                    body.update(end)
-
-                elif function_name == "positions_audit_POST":
-                    body = {"id": ids}
-
-                elif function_name == "order_trades_POST":
-                    _endpoint = f"{endpoint}/{symbol}:{order_id}/trades"
-
-                elif function_name == "margin_info_POST":
-                    _endpoint = endpoint + str(key)
-
-                elif function_name == "wallet_movements_POST":
-                    endpt_2 = f"/{currency}/hist" if currency else "/hist"
-                    _endpoint = endpoint + endpt_2
-
-                elif function_name == "alert_delete_POST":
-                    _endpoint = endpoint + f":{symbol}:{price}/del"
-
-                elif function_name == "user_settings_read_POST":
-                    body = {"keys": keys}
-
-                elif function_name == "user_settings_write_POST":
-                    body = {"settings": settings}
-
-                elif function_name == "user_settings_delete_POST":
-                    body = {"settings": settings}
-
-                elif (function_name == "ticker_GET"
-                        or function_name == "funding_offers_POST"
-                        or function_name == "funding_loans_POST"
-                        or function_name == "funding_credits_POST"
-                        or function_name == "funding_info_POST"
-                        or function_name == "funding_loans_POST"):
-                    _endpoint = endpoint + str(symbol)
-
-                elif (function_name == "foreign_exchange_rate_POST"
-                        or function_name == "positions_history_POST"
-                        or function_name == "alert_set_POST"
-                        or function_name == "calculate_available_balance_POST"
-                        or function_name == "positions_history_POST"):
-                    params = {}
-                    body = {}
-                    body.update(kwargs)
-
-                elif (function_name == "orders_history_POST"
-                        or function_name == "trades_POST"
-                        or function_name == "funding_offers_history_POST"
-                        or function_name == "funding_loans_history_POST"
-                        or function_name == "funding_credits_history_POST"
-                        or function_name == "funding_trades_POST"
-                        or function_name == "ledgers_POST"):
-                    endpoint_2 = f"/{symbol}/hist" if symbol else "/hist"
-                    _endpoint = endpoint + endpoint_2
-
+                _endpoint, params, body = _set_endpoint(
+                    symbol=symbol, precision=precision,
+                    key=key, size=size, section=section,
+                    end=end, timeframe=timeframe,
+                    order_id=order_id, currency=currency,
+                    price=price, keys=keys, ids=ids,
+                    body=body, settings=settings, kwargs=kwargs
+                )
                 response = await self._request_async(
                     _endpoint, verb, params, body
                 )
@@ -1527,7 +1536,7 @@ class Bitfinex:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, api_secret: str = None,
                  request_timeout: int = 10, max_retries: int = 0,
-                 retry_time: int = 3, cache_expire: int = 120):
+                 retry_time: int = 3, cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -1713,7 +1722,7 @@ class Deribit:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
 
     To alternate between mainnet & testnet:
@@ -1731,25 +1740,35 @@ class Deribit:
         "test_GET": "/public/test",
         # Account management
         "get_announcements_GET": "/public/get_announcements",
+        "change_scope_in_api_key_GET": "/private/change_scope_in_api_key",
         "change_subaccount_name_GET": "/private/change_subaccount_name",
+        "create_api_key_GET": "/private/create_api_key",
         "create_subaccount_GET": "/private/create_subaccount",
-        "disable_tfa_for_subaccount_GET": \
-                    "/private/disable_tfa_for_subaccount",
+        "disable_api_key_GET": "/private/disable_api_key",
+        "disable_tfa_for_subaccount_GET": "/private/disable_tfa_for_subaccount",
+        "enable_api_key_GET": "/private/enable_api_key",
         "get_account_summary_GET": "/private/get_account_summary",
         "get_email_language_GET": "/private/get_email_language",
         "get_new_announcements_GET": "/private/get_new_announcements",
         "get_position_GET": "/private/get_position",
         "get_positions_GET": "/private/get_positions",
         "get_subaccounts_GET": "/private/get_subaccounts",
+        "list_api_keys_GET": "/private/list_api_keys",
+        "remove_api_key_GET": "/private/remove_api_key",
+        "reset_api_key_GET": "/private/reset_api_key",
         "set_announcement_as_read_GET": "/private/set_announcement_as_read",
-        "create_subaccount_GET": "/private/create_subaccount",
+        "set_api_key_as_default_GET": "/private/set_api_key_as_default",
         "set_email_for_subaccount_GET": "/private/set_email_for_subaccount",
         "set_email_language_GET": "/private/set_email_language",
-        "set_password_for_subaccount_GET": \
-                    "/private/set_password_for_subaccount",
-        "toggle_notifications_from_subaccount_GET": \
-                    "/private/toggle_notifications_from_subaccount",
+        "set_password_for_subaccount_GET": "/private/set_password_for_subaccount",
+        "toggle_notifications_from_subaccount_GET": "/private/toggle_notifications_from_subaccount",
         "toggle_subaccount_login_GET": "/private/toggle_subaccount_login",
+        # Block trade
+        "execute_block_trade_GET": "/private/execute_block_trade",
+        "get_block_trade_GET": "/private/get_block_trade",
+        "get_last_block_trades_by_currency_GET": "/private/get_last_block_trades_by_currency",
+        "invalidate_block_trade_signature_GET": "/private/invalidate_block_trade_signature",
+        "verify_block_trade_GET": "/private/verify_block_trade",
         # Trading
         "order_buy_GET": "/private/buy",
         "order_sell_GET": "/private/sell",
@@ -1757,68 +1776,52 @@ class Deribit:
         "order_cancel_GET": "/private/cancel",
         "order_cancel_all_GET": "/private/cancel_all",
         "order_cancel_all_by_currency_GET": "/private/cancel_all_by_currency",
-        "order_cancel_all_by_instrument_GET": \
-                    "/private/cancel_all_by_instrument",
+        "order_cancel_all_by_instrument_GET": "/private/cancel_all_by_instrument",
         "close_position_GET": "/private/close_position",
         "get_margins_GET": "/private/get_margins",
-        "get_open_orders_by_currency_GET": \
-                    "/private/get_open_orders_by_currency",
-        "get_open_orders_by_instrument_GET": \
-                    "/private/get_open_orders_by_instrument",
-        "get_order_history_by_currency_GET": \
-                    "/private/get_order_history_by_currency",
-        "get_order_history_by_instrument_GET": \
-                    "/private/get_order_history_by_instrument",
+        "get_open_orders_by_currency_GET": "/private/get_open_orders_by_currency",
+        "get_open_orders_by_instrument_GET": "/private/get_open_orders_by_instrument",
+        "get_order_history_by_currency_GET": "/private/get_order_history_by_currency",
+        "get_order_history_by_instrument_GET": "/private/get_order_history_by_instrument",
         "get_order_margin_by_ids_GET": "/private/get_order_margin_by_ids",
         "get_order_state_GET": "/private/get_order_state",
-        "get_user_trades_by_currency_GET": \
-                    "/private/get_user_trades_by_currency",
-        "get_user_trades_by_currency_and_time_GET": \
-                    "/private/get_user_trades_by_currency_and_time",
-        "get_user_trades_by_instrument_GET": \
-                    "/private/get_user_trades_by_instrument",
-        "get_user_trades_by_instrument_and_time_GET": \
-                    "/private/get_user_trades_by_instrument_and_time",
+        "get_stop_order_history_GET": "/private/get_stop_order_history",
+        "get_user_trades_by_currency_GET": "/private/get_user_trades_by_currency",
+        "get_user_trades_by_currency_and_time_GET": "/private/get_user_trades_by_currency_and_time",
+        "get_user_trades_by_instrument_GET": "/private/get_user_trades_by_instrument",
+        "get_user_trades_by_instrument_and_time_GET": "/private/get_user_trades_by_instrument_and_time",
         "get_user_trades_by_order_GET": "/private/get_user_trades_by_order",
-        "get_settlement_history_by_instrument_GET": \
-                    "/private/get_settlement_history_by_instrument",
-        "get_settlement_history_by_currency_GET": \
-                    "/private/get_settlement_history_by_currency",
+        "get_settlement_history_by_instrument_GET": "/private/get_settlement_history_by_instrument",
+        "get_settlement_history_by_currency_GET": "/private/get_settlement_history_by_currency",
         # Market data
-        "get_book_summary_by_currency_GET": \
-                    "/public/get_book_summary_by_currency",
-        "get_book_summary_by_instrument_GET": \
-                    "/public/get_book_summary_by_instrument",
+        "get_book_summary_by_currency_GET": "/public/get_book_summary_by_currency",
+        "get_book_summary_by_instrument_GET": "/public/get_book_summary_by_instrument",
         "get_contract_size_GET": "/public/get_contract_size",
         "get_currencies_GET": "/public/get_currencies",
         "get_funding_chart_data_GET": "/public/get_funding_chart_data",
         "get_historical_volatility_GET": "/public/get_historical_volatility",
         "get_index_GET": "/public/get_index",
         "get_instruments_GET": "/public/get_instruments",
-        "get_last_settlements_by_currency_GET": \
-                    "/public/get_last_settlements_by_currency",
-        "get_last_settlements_by_instrument_GET": \
-                    "/public/get_last_settlements_by_instrument",
-        "get_last_trades_by_currency_GET": \
-                    "/public/get_last_trades_by_currency",
-        "get_last_trades_by_currency_and_time_GET": \
-                    "/public/get_last_trades_by_currency_and_time",
-        "get_last_trades_by_instrument_GET": \
-                    "/public/get_last_trades_by_instrument",
-        "get_last_trades_by_instrument_and_time_GET": \
-                    "/public/get_last_trades_by_instrument_and_time",
+        "get_last_settlements_by_currency_GET": "/public/get_last_settlements_by_currency",
+        "get_last_settlements_by_instrument_GET": "/public/get_last_settlements_by_instrument",
+        "get_last_trades_by_currency_GET": "/public/get_last_trades_by_currency",
+        "get_last_trades_by_currency_and_time_GET": "/public/get_last_trades_by_currency_and_time",
+        "get_last_trades_by_instrument_GET": "/public/get_last_trades_by_instrument",
+        "get_last_trades_by_instrument_and_time_GET": "/public/get_last_trades_by_instrument_and_time",
         "get_order_book_GET": "/public/get_order_book",
         "get_trade_volumes_GET": "/public/get_trade_volumes",
+        "get_tradingview_chart_data_GET": "/public/get_tradingview_chart_data",
         "ticker_GET": "/public/ticker",
         # Wallet
         "wallet_cancel_transfer_by_id_GET": "/private/cancel_transfer_by_id",
         "wallet_cancel_withdrawal_GET": "/private/cancel_withdrawal",
         "wallet_create_deposit_address_GET": "/private/create_deposit_address",
-        "wallet_get_current_deposit_address_GET": \
-                    "/private/get_current_deposit_address",
+        "wallet_get_current_deposit_address_GET": "/private/get_current_deposit_address",
         "wallet_get_deposits_GET": "/private/get_deposits",
         "wallet_get_transfers_GET": "/private/get_transfers",
         "wallet_get_withdrawals_GET": "/private/get_withdrawals",
+        "submit_transfer_to_subaccount_GET": "/private/submit_transfer_to_subaccount",
+        "submit_transfer_to_user_GET": "/private/submit_transfer_to_user",
         "wallet_withdraw_GET": "/private/withdraw"
     }
 
@@ -1842,7 +1845,7 @@ class Deribit:
     def __init__(self, asynchronous: bool = False,
                  api_key: str = None, api_secret: str = None,
                  request_timeout: int = 10, max_retries: int = 0,
-                 retry_time: int = 3,  cache_expire: int = 120):
+                 retry_time: int = 3, cache_expire: int = 0):
         # Set logger
         self.logger = logging.getLogger(f"CryptoWrapper")
         self.logger.debug(f"Initializing {self.__repr__()}")
@@ -2030,7 +2033,7 @@ class CryptoWrapper:
             Interval between retries.
 
     Not supported in async mode:
-        cache_expire: int = 120 (seconds)
+        cache_expire: int = 0 (seconds)
             How long results will be cached.
     '''
     _API_WRAPPERS = {

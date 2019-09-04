@@ -34,7 +34,7 @@ More detailed informations contained in the docs below:<br/>
 
 ### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 Rate limits informations generally present in responses to simplify the implementation of back off strategies.<br/>
 
@@ -137,12 +137,13 @@ BinanceDEX.__getfunctions__()
 [
     'account_GET',
     'account_sequence_GET',
+    'block_exchange_fee_GET',
     'broadcast_POST',
+    'depth_GET',
     'fees_GET',
     'klines_GET',
     'markets_GET',
     'node_info_GET',
-    'orderbook_GET',
     'orders_closed_GET',
     'orders_id_GET',
     'orders_open_GET',
@@ -152,8 +153,8 @@ BinanceDEX.__getfunctions__()
     'tokens_GET',
     'trades_GET',
     'transaction_GET',
-    'transaction_json_GET',
     'transactions_GET',
+    'transactions_in_block_GET',
     'validators_GET'
 ]
 ```
@@ -167,6 +168,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

@@ -26,79 +26,103 @@ Build around raw API commands, each endpoint is made directly available.<br/>
 Currently supported endpoints, **_functions_**:<br/>
 
   * **Public**
-    - [x] auth_GET
-    - [x] get_announcements_GET
-    - [x] get_book_summary_by_currency_GET
-    - [x] get_book_summary_by_instrument_GET
-    - [x] get_contract_size_GET
-    - [x] get_currencies_GET
-    - [x] get_funding_chart_data_GET
-    - [x] get_historical_volatility_GET
-    - [x] get_index_GET
-    - [x] get_instruments_GET
-    - [x] get_last_settlements_by_currency_GET
-    - [x] get_last_settlements_by_instrument_GET
-    - [x] get_last_trades_by_currency_GET
-    - [x] get_last_trades_by_currency_and_time_GET
-    - [x] get_last_trades_by_instrument_GET
-    - [x] get_last_trades_by_instrument_and_time_GET
-    - [x] get_order_book_GET
-    - [x] get_time_GET
-    - [x] get_trade_volumes_GET
-    - [x] test_GET
-    - [x] ticker_GET
+    - Authentication
+      * [x] auth_GET
+    - Supporting
+      * [x] get_time_GET
+      * [x] test_GET
+    - Market data
+      * [x] get_book_summary_by_currency_GET
+      * [x] get_book_summary_by_instrument_GET
+      * [x] get_contract_size_GET
+      * [x] get_currencies_GET
+      * [x] get_funding_chart_data_GET
+      * [x] get_historical_volatility_GET
+      * [x] get_index_GET
+      * [x] get_instruments_GET
+      * [x] get_last_settlements_by_currency_GET
+      * [x] get_last_settlements_by_instrument_GET
+      * [x] get_last_trades_by_currency_GET
+      * [x] get_last_trades_by_currency_and_time_GET
+      * [x] get_last_trades_by_instrument_GET
+      * [x] get_last_trades_by_instrument_and_time_GET
+      * [x] get_order_book_GET
+      * [x] get_trade_volumes_GET
+      * [x] get_tradingview_chart_data_GET
+      * [x] ticker_GET
   * **Private**
-    - [x] change_subaccount_name_GET
-    - [x] close_position_GET
-    - [x] create_subaccount_GET
-    - [x] disable_tfa_for_subaccount_GET
-    - [x] get_account_summary_GET
-    - [x] get_email_language_GET
-    - [x] get_margins_GET
-    - [x] get_new_announcements_GET
-    - [x] get_open_orders_by_currency_GET
-    - [x] get_open_orders_by_instrument_GET
-    - [x] get_order_history_by_currency_GET
-    - [x] get_order_history_by_instrument_GET
-    - [x] get_order_margin_by_ids_GET
-    - [x] get_order_state_GET
-    - [x] get_position_GET
-    - [x] get_positions_GET
-    - [x] get_settlement_history_by_currency_GET
-    - [x] get_settlement_history_by_instrument_GET
-    - [x] get_subaccounts_GET
-    - [x] get_user_trades_by_currency_GET
-    - [x] get_user_trades_by_currency_and_time_GET
-    - [x] get_user_trades_by_instrument_GET
-    - [x] get_user_trades_by_instrument_and_time_GET
-    - [x] get_user_trades_by_order_GET
-    - [x] order_buy_GET
-    - [x] order_cancel_GET
-    - [x] order_cancel_all_GET
-    - [x] order_cancel_all_by_currency_GET
-    - [x] order_cancel_all_by_instrument_GET
-    - [x] order_edit_GET
-    - [x] order_sell_GET
-    - [x] set_announcement_as_read_GET
-    - [x] set_email_for_subaccount_GET
-    - [x] set_email_language_GET
-    - [x] set_password_for_subaccount_GET
-    - [x] toggle_notifications_from_subaccount_GET
-    - [x] toggle_subaccount_login_GET
-    - [x] wallet_cancel_transfer_by_id_GET
-    - [x] wallet_cancel_withdrawal_GET
-    - [x] wallet_create_deposit_address_GET
-    - [x] wallet_get_current_deposit_address_GET
-    - [x] wallet_get_deposits_GET
-    - [x] wallet_get_transfers_GET
-    - [x] wallet_get_withdrawals_GET
-    - [x] wallet_withdraw_GET
+    - Account management
+      * [x] get_announcements_GET
+      * [x] change_scope_in_api_key_GET
+      * [x] change_subaccount_name_GET
+      * [x] create_api_key_GET
+      * [x] create_subaccount_GET
+      * [x] disable_api_key_GET
+      * [x] disable_tfa_for_subaccount_GET
+      * [x] enable_api_key_GET
+      * [x] get_account_summary_GET
+      * [x] get_email_language_GET
+      * [x] get_new_announcements_GET
+      * [x] get_position_GET
+      * [x] get_positions_GET
+      * [x] get_subaccounts_GET
+      * [x] list_api_keys_GET
+      * [x] remove_api_key_GET
+      * [x] reset_api_key_GET
+      * [x] set_announcement_as_read_GET
+      * [x] set_api_key_as_default_GET
+      * [x] set_email_for_subaccount_GET
+      * [x] set_email_language_GET
+      * [x] set_password_for_subaccount_GET
+      * [x] toggle_notifications_from_subaccount_GET
+      * [x] toggle_subaccount_login_GET
+    - Block trade
+      * [x] execute_block_trade_GET
+      * [x] get_block_trade_GET
+      * [x] get_last_block_trades_by_currency_GET
+      * [x] invalidate_block_trade_signature_GET
+      * [x] verify_block_trade_GET
+    - Trading
+      * [x] order_buy_GET
+      * [x] order_sell_GET
+      * [x] order_edit_GET
+      * [x] order_cancel_GET
+      * [x] order_cancel_all_GET
+      * [x] order_cancel_all_by_currency_GET
+      * [x] order_cancel_all_by_instrument_GET
+      * [x] close_position_GET
+      * [x] get_margins_GET
+      * [x] get_open_orders_by_currency_GET
+      * [x] get_open_orders_by_instrument_GET
+      * [x] get_order_history_by_currency_GET
+      * [x] get_order_history_by_instrument_GET
+      * [x] get_order_margin_by_ids_GET
+      * [x] get_order_state_GET
+      * [x] get_stop_order_history_GET
+      * [x] get_user_trades_by_currency_GET
+      * [x] get_user_trades_by_currency_and_time_GET
+      * [x] get_user_trades_by_instrument_GET
+      * [x] get_user_trades_by_instrument_and_time_GET
+      * [x] get_user_trades_by_order_GET
+      * [x] get_settlement_history_by_instrument_GET
+      * [x] get_settlement_history_by_currency_GET
+    - Wallet
+      * [x] wallet_cancel_transfer_by_id_GET
+      * [x] wallet_cancel_withdrawal_GET
+      * [x] wallet_create_deposit_address_GET
+      * [x] wallet_get_current_deposit_address_GET
+      * [x] wallet_get_deposits_GET
+      * [x] wallet_get_transfers_GET
+      * [x] wallet_get_withdrawals_GET
+      * [x] submit_transfer_to_subaccount_GET
+      * [x] submit_transfer_to_user_GET
+      * [x] wallet_withdraw_GET
 
 <br/>
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
 Rate limits are returned in ratelimit: "limit", "remaining", "reset".<br/>
 
@@ -207,6 +231,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>

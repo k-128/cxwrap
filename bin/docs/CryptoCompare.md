@@ -38,8 +38,15 @@ Currently supported endpoints within their minimum pricing plans, **_functions_*
     - [x] historical_daily_average_price_GET
     - [x] historical_daily_exchange_volume_GET
     - [x] historical_hourly_exchange_volume_GET
+    - [x] daily_market_close_GET
+  * **Pair mapping**
+    - [x] pair_mapping_symbol_latest_GET
+    - [x] pair_mapping_exchange_latest_GET
+    - [x] pair_mapping_exchange_from_symbol_latest_GET
+    - [x] pair_mapping_updates_GET
   * **Toplists**
     - [x] toplist_24h_volume_full_GET
+    - [x] toplist_24h_top_tier_volume_full_GET
     - [x] toplist_market_cap_full_GET
     - [x] toplist_exchanges_volume_pair_GET
     - [x] toplist_exchanges_full_pair_GET
@@ -56,22 +63,30 @@ Currently supported endpoints within their minimum pricing plans, **_functions_*
     - [x] news_feeds_and_categories_GET
   * **Orderbook**
     - [x] orderbook_exchanges_list_GET
+    - [x] orderbook_l1_top_GET
     - [x] orderbook_l2_snapshot_GET
   * **General info**
     - [x] rate_limit_GET
     - [x] rate_limit_hour_GET
     - [x] list_exchanges_and_trading_pairs_GET
     - [x] instrument_constituent_exchanges_GET
+    - [x] CCCAGG_constituent_pairs_GET
+    - [x] CCCAGG_excluded_pairs_GET
+    - [x] CCCAGG_absent_pairs_GET
+    - [x] CCCAGG_absent_coins_GET
     - [x] list_coins_GET
     - [x] info_exchanges_GET
+    - [x] info_gambling_GET
     - [x] info_wallets_GET
     - [x] info_crypto_cards_GET
     - [x] info_mining_contracts_GET
+    - [x] info_mining_companies_GET
     - [x] info_mining_equipment_GET
     - [x] info_mining_pools_GET
-    - [x] list_pair_remapping_events_GET
+    - [x] info_recommended_entities_GET
   * **Streaming**
     - [x] toplist_24h_volume_subscriptions_GET
+    - [x] toplist_24h_top_tier_volume_subscriptions_GET
     - [x] toplist_market_cap_subscriptions_GET
     - [x] subs_by_pair_GET
     - [x] subs_watchlist_GET
@@ -81,9 +96,8 @@ Currently supported endpoints within their minimum pricing plans, **_functions_*
 
 #### Examples:
 
-If unspecified, result will be cached 120 seconds.<br/>
+If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
-Rate limits are returned in status: "elapsed", "credit_count".<br/>
 
 CryptoCompare.price_GET() (+ cache example)
 ```python
@@ -160,6 +174,6 @@ For the async version see: [async_example.py](/test/async_example.py)
 
 ### Feedback:
 
-Constructive feedback & bug reports are always welcome. <br/>
+Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
 * <a href="https://github.com/xnr-k"> github </a>
