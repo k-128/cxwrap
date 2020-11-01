@@ -1,4 +1,4 @@
-# CryptoWrapper
+# cxwrap
 
 > Python 3.7+<br/>
 
@@ -11,10 +11,14 @@
 <br/>
 
 ### Installation:
+---
 
-`pip install xnr-cryptowrapper` <br/>
+- `pip install xnr-cryptowrapper`
+
+<br />
 
 ### Functions:
+---
 
 Build around raw API commands, in order to allow users to more freely implement their own logic.<br/>
 Each APIs endpoints are made directly available by the CryptoWrapper class.<br/>
@@ -33,10 +37,13 @@ More detailed informations contained in the docs below:<br/>
 <br/>
 
 ### Examples:
+---
 
 If unspecified, result will not be cached.<br/>
 Retries avoided for errors (400, 401, 403, 404, 429, 500).<br/>
-Rate limits informations generally present in responses to simplify the implementation of back off strategies.<br/>
+Rate limits informations generally present in responses to simplify the implementation of back off strategies.
+
+<br />
 
 CoinMarketCap.global_aggregate_metrics_latest_GET()
 ```python
@@ -167,6 +174,7 @@ For the async version see: [async_example.py](/test/async_example.py)
 <br/>
 
 ### Feedback:
+---
 
 Constructive feedback & bug reports are welcome. <br/>
 Contact informations:
