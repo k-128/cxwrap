@@ -1,12 +1,10 @@
 # cxwrap
+---
 
-> Python 3.7+<br/>
-
-> PEP8<br/>
-
-> Async support (without cache)<br/>
-
-> Handles configurable requests cache, retries and general request errors.
+- Python 3.7+
+- PEP8
+- Async support
+- Configurable requests cache, retries and request errors handling
 
 <br/>
 
@@ -20,9 +18,8 @@
 ### Functions:
 ---
 
-Build around raw API commands, in order to allow users to more freely implement their own logic.<br/>
-Each APIs endpoints are made directly available by the CryptoWrapper class.<br/>
-More detailed informations contained in the docs below:<br/>
+Expose raw API endpoints to allow freer implementations.<br/>
+API specific docs:<br/>
 
 |                                                |            Description            |
 |------------------------------------------------|:---------------------------------:|
@@ -171,11 +168,3 @@ BinanceDEX.__getfunctions__()
 For a quick combined example see: [example.py](/test/example.py)<br/>
 For the async version see: [async_example.py](/test/async_example.py)
 
-<br/>
-
-### Feedback:
----
-
-Constructive feedback & bug reports are welcome. <br/>
-Contact informations:
-* <a href="https://github.com/xnr-k"> github </a>
