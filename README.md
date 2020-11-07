@@ -5,6 +5,7 @@
 - PEP8
 - Async support
 - Configurable requests cache, retries and request errors handling
+- Dynamic size, class functions are generated during initialization
 
 <br/>
 
